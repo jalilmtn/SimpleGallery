@@ -3,7 +3,7 @@ import androidx.paging.PagingData
 import com.example.simplegallery.domain.model.Media
 import kotlinx.coroutines.flow.Flow
 
-interface MediaRepository {
+interface MediaPagerRepo {
 
     fun getMedia(): Flow<PagingData<Media>>
 

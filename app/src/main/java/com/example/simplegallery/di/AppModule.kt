@@ -6,8 +6,10 @@ import android.content.Context
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import com.example.simplegallery.data.MediaPagingSource
+import com.example.simplegallery.data.repo.MediaPagerRepoImpl
 import com.example.simplegallery.data.repo.MediaRepoImpl
-import com.example.simplegallery.domain.repo.MediaRepository
+import com.example.simplegallery.domain.repo.MediaPagerRepo
+import com.example.simplegallery.domain.repo.MediaRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,19 +25,25 @@ object AppModule {
     fun provideContentResolver(@ApplicationContext context: Context): ContentResolver {
         return context.contentResolver
     }
-
     @Provides
     @Singleton
-    fun providePagingSource(contentResolver: ContentResolver): MediaPagingSource {
-        return MediaPagingSource(contentResolver)
+    fun provideContentResolverRepository(
+        contentResolver: ContentResolver
+    ): MediaRepo {
+        return MediaRepoImpl(contentResolver)
+    }
+    @Provides
+    @Singleton
+    fun providePagingSource(mediaRepo: MediaRepo): MediaPagingSource {
+        return MediaPagingSource(mediaRepo)
     }
 
     @Provides
     @Singleton
     fun provideMediaRepository(
         mediaPagingSource: MediaPagingSource
-    ): MediaRepository {
-        return MediaRepoImpl(mediaPagingSource)
+    ): MediaPagerRepo {
+        return MediaPagerRepoImpl(mediaPagingSource)
     }
 
     @Provides

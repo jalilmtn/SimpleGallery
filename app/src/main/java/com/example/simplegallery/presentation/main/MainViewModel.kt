@@ -7,7 +7,7 @@ import androidx.media3.common.Player
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.simplegallery.domain.model.Media
-import com.example.simplegallery.domain.repo.MediaRepository
+import com.example.simplegallery.domain.repo.MediaPagerRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val mediaRepository: MediaRepository,
+    private val mediaPagerRepo: MediaPagerRepo,
     val player: Player
 ) : ViewModel() {
 
@@ -26,7 +26,7 @@ class MainViewModel @Inject constructor(
 
 
     fun start() {
-        _state.value = MainState(mediaRepository.getMedia().cachedIn(viewModelScope))
+        _state.value = MainState(mediaPagerRepo.getMedia().cachedIn(viewModelScope))
     }
 
 

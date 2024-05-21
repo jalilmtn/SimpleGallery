@@ -1,15 +1,14 @@
 package com.example.simplegallery.data
 
-import android.content.ContentResolver
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.simplegallery.core.ErrorMessage
-import com.example.simplegallery.core.getMedia
 import com.example.simplegallery.domain.model.Media
+import com.example.simplegallery.domain.repo.MediaRepo
 import javax.inject.Inject
 
 class MediaPagingSource @Inject constructor(
-    private val contentResolver: ContentResolver,
+    private val contentResolverRepo: MediaRepo,
 ) : PagingSource<Int, Media>() {
 
     override val jumpingSupported: Boolean
@@ -25,7 +24,7 @@ class MediaPagingSource @Inject constructor(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Media> {
         return try {
             val page = params.key ?: 1
-            val response = contentResolver.getMedia(page = page)
+            val response = contentResolverRepo.getMedia(page = page)
 
             LoadResult.Page(
                 data = response,
