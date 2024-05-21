@@ -13,6 +13,7 @@ import com.example.simplegallery.domain.model.Media
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+//TODO: We can inject Dispatchers too
 suspend fun ContentResolver.getMedia(
     mediaQuery: Query = Query.MediaQuery(),
     page: Int
