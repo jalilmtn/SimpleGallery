@@ -1,24 +1,23 @@
 [versions]
-agp = "8.4.0"
+agp = "8.4.1"
 kotlin = "1.9.21"
-coreKtx = "1.12.0"
+coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
-lifecycleRuntimeKtx = "2.6.1"
-activityCompose = "1.8.2"
-composeBom = "2023.08.00"
+lifecycleRuntimeKtx = "2.8.0"
+activityCompose = "1.9.0"
+composeBom = "2024.05.00"
 hilt = "2.51"
 hiltC = "1.2.0"
 ksp = "1.9.21-1.0.15"
 coil = "2.4.0"
-paging = "3.2.1"
+paging = "3.3.0"
 accompanist = "0.34.0"
-exoplayer = "1.2.0"
+exoplayer = "1.3.1"
 truth = "1.4.1"
 mockk = "1.13.5"
 pagingTestingAndroid = "3.3.0"
-androidTest = "4.1.1.4"
 coroutines = "1.7.3"
 
 
@@ -50,7 +49,6 @@ exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref 
 exoplayer-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "exoplayer" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
-mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 androidx-paging-testing-android = { group = "androidx.paging", name = "paging-testing-android", version.ref = "pagingTestingAndroid" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 

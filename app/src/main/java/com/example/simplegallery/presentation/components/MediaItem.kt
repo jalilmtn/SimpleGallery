@@ -1,6 +1,7 @@
 package com.example.simplegallery.presentation.components
 
 import android.net.Uri
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
@@ -21,26 +22,29 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.media3.common.Player
 import androidx.media3.ui.PlayerView
-import coil.ImageLoader
-import coil.compose.AsyncImage
-import coil.decode.VideoFrameDecoder
-import com.example.simplegallery.R
+import coil.compose.rememberAsyncImagePainter
 import com.example.simplegallery.domain.model.Media
 
 @Composable
 fun ImageItem(media: Media?, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    val request = remember(context, media?.uri) {
+        coilImageRequest(
+            context = context,
+            data = media?.uri,
+            size = THUMBNAIL_SIZE,
+        )
+    }
     var isClicked by remember {
         mutableStateOf(false)
     }
-    AsyncImage(
-        model = media?.uri, contentDescription = null,
-        contentScale = ContentScale.Crop,
-        placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
+    Image(
+        painter = rememberAsyncImagePainter(model = request),
+        contentDescription = null,
         modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = {
@@ -48,6 +52,7 @@ fun ImageItem(media: Media?, modifier: Modifier = Modifier) {
             })
             .aspectRatio(.7f)
             .clip(RoundedCornerShape(CornerSize(8.dp))),
+        contentScale = ContentScale.Crop,
         colorFilter = if (isClicked) ColorFilter.colorMatrix(ColorMatrix().apply {
             setToSaturation(
                 0f
@@ -87,17 +92,19 @@ fun VideoItem(
                     .clip(RoundedCornerShape(CornerSize(8.dp)))
             )
         else {
-            val imageLoader = ImageLoader.Builder(LocalContext.current)
-                .components {
-                    add(VideoFrameDecoder.Factory())
-                }
-                .build()
+            val context = LocalContext.current
 
-            AsyncImage(
-                model = uri,
-                imageLoader = imageLoader,
-                contentDescription = "",
-                modifier = Modifier.fillMaxSize()
+            val request = remember(context, uri) {
+                coilImageRequest(
+                    context = context,
+                    data = uri,
+                    size = THUMBNAIL_SIZE,
+                )
+            }
+            Image(
+                painter = rememberAsyncImagePainter(model = request),
+                modifier = Modifier.fillMaxSize(),
+                contentDescription = null
             )
             CircleIconButton(
                 onclick = play,
